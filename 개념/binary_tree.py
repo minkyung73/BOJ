@@ -42,6 +42,7 @@ class BinaryTree:
 
 class NodeMgmt:
     def __init__(self, head):
+        self.current_node = None
         self.head = head  # 루트노드
 
     # 삽입

@@ -44,11 +44,11 @@ while stack:
     # leaf node가 아닌 경우, 스택에 저장
     if flag == True:
         if arr[v]:
-            print(arr[v])
+            # print(arr[v])
             for nv, nd in arr[v]:
                 if visited[nv] == 0:
                     stack.append([nv, distance + nd])
-    # leaf node인 경우, 최대값을 갱신해 줍니다.
+    # leaf node인 경우, 최대값 갱신
     else:
         if distance > result:
             result = distance
