@@ -1,5 +1,11 @@
 from sys import stdin
 
+# n = int(stdin.readline().strip())
+# arr = []
+# for i in range(n):
+#     arr.append(list(map(str, stdin.readline().strip().split())))
+# arr.sort()
+
 
 class Node:
     def __init__(self, item):
@@ -78,24 +84,22 @@ class BinaryTree:
 
 
 tree = BinaryTree()
-n1 = Node(10)
-n2 = Node(20)
-n3 = Node(30)
-n4 = Node(40)
-n5 = Node(50)
-n6 = Node(60)
-n7 = Node(70)
-n8 = Node(80)
 
-# create a tree
+n1 = Node('A')
+n2 = Node('B')
+n3 = Node('C')
+n4 = Node('D')
+n5 = Node('E')
+n6 = Node('F')
+n7 = Node('G')
+
 tree.root = n1
 n1.left = n2
 n1. right = n3
 n2.left = n4
-n2.right = n5
-n3.left = n6
-n3.right = n7
-n4.left = n8
+n3.left = n5
+n3.right = n6
+n6.right = n7
 
 print("preorder: ", end='')
 tree.preorder(tree.root)
