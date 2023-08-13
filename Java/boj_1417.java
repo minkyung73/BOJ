@@ -13,6 +13,7 @@ public class boj_1417 {
         }
         int M = candidate.stream().mapToInt(Integer::intValue).sum();
 
+        // implementation
         int max = Collections.max(candidate);
         int dasom = candidate.get(0);
         candidate = candidate.subList(1, candidate.size());
