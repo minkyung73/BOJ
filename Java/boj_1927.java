@@ -11,7 +11,7 @@ public class boj_1927 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
 
-        PriorityQueue<Integer> minQueue = new PriorityQueue<Integer>();
+        PriorityQueue<Integer> minQueue = new PriorityQueue<>();
         for(int i=0 ; i<n ; i++) {
             int input = Integer.parseInt(br.readLine());
             if(input > 0) {
