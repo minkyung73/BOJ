@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class goorm_1_aiVacuumCleaner {
+public class goorm_1_ai_vacuum_cleaner {
     static String vacuum(int abs, int n) {
         if(abs == n) return "YES";
         else if(abs > n) return "NO";
