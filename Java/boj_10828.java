@@ -1,50 +1,37 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
 
 public class boj_10828 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // 스택
 
         // input
-        Scanner sc = new Scanner(System.in);
-        StringBuilder sb = new StringBuilder();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        Stack<Integer> stack = new Stack<>();
 
-        int N = sc.nextInt();
-        sc.nextLine();
-        List<String> command = new ArrayList<>();
-        for(int i=0 ; i<N ; i++) {
-            command.add(sc.nextLine());
-        }
-
-        // stack & output
-        List<Integer> stack = new ArrayList<>();
-        for (String s : command) {
-            boolean empty = stack.isEmpty();
-            int size = stack.size();
-
-            if(s.contains("push")) {
-                String[] split = s.split(" ");
-                stack.add(Integer.parseInt(split[1]));
-
-            } else if(s.equals("pop")) {
-                if (empty) System.out.println("-1");
+        for(int i=0 ; i<n ; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            String command = st.nextToken();
+            if(command.equals("push")) {
+                int input = Integer.parseInt(st.nextToken());
+                stack.push(input);
+            } else if(command.equals("pop")) {
+                if(stack.isEmpty()) System.out.println(-1);
                 else {
-                    int n = stack.remove(size-1);
-                    System.out.println(n);
+                    System.out.println(stack.peek());
+                    stack.pop();
                 }
-
-            } else if(s.equals("top")) {
-                if (empty) System.out.println("-1");
-                else System.out.println(stack.get(size-1));
-
-            } else if(s.equals("size")) {
-                System.out.println(size);
-
-            } else if(s.equals("empty")) {
-                if (empty) System.out.println("1");
-                else System.out.println("0");
-
+            }else if(command.equals("top")) {
+                if(stack.isEmpty()) System.out.println(-1);
+                else System.out.println(stack.peek());
+            } else if(command.equals("size")) {
+                System.out.println(stack.size());
+            } else if(command.equals("empty")) {
+                if(stack.isEmpty()) System.out.println(1);
+                else System.out.println(0);
             }
         }
     }
