@@ -4,6 +4,8 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class boj_10250 {
+    // ACM 호텔
+
     private static int[][] arr;
 
     public static void main(String[] args) throws IOException {
