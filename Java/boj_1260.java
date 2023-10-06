@@ -13,10 +13,11 @@ public class boj_1260 {
 
     static void DFS(int node) {
         Dvisit[node] = true;
-        System.out.println(node + " ");
+        System.out.print(node + " ");
 
         for(int i=1 ; i<=n ; i++) {
-            if(!Dvisit[i] && Dgraph[node][i] == 1) DFS(i);
+            if(!Dvisit[i] && Dgraph[node][i] == 1)
+                DFS(i);
         }
     }
 
@@ -28,7 +29,7 @@ public class boj_1260 {
 
         while (!queue.isEmpty()) {
             int p = queue.poll();
-            System.out.println(p + " ");
+            System.out.print(p + " ");
 
             for(int i=1 ; i<=n ; i++) {
                 if(!Bvisit[i] && Bgraph[p][i] == 1) {
