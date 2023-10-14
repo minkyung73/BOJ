@@ -34,10 +34,7 @@ public class boj_1697 {
             int cur_num;
 
             for(int i=0 ; i<size ; i++) {
-//                System.out.println(queue);
                 cur_num = queue.poll();
-//                System.out.println(cur_num);
-//                System.out.println();
 
                 if(cur_num == K) return cnt;
 
@@ -68,7 +65,6 @@ public class boj_1697 {
                 }
             }
             cnt++;
-//            System.out.println("cnt: " + cnt);
         }
 
         return cnt;
