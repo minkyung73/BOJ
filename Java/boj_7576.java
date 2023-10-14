@@ -34,16 +34,6 @@ public class boj_7576 {
             }
         }
 
-        // BFS
-//        for(int i=0 ; i<N ; i++) {
-//            for(int j=0 ; j<M ; j++) {
-//                if(map[i][j] == 1 && !visited[i][j]) {
-//                    result += BFS(i, j);
-//                    System.out.println(result);
-//                }
-//            }
-//        }
-
         for(int i=0 ; i<N ; i++) {
             for(int j=0 ; j<M ; j++) {
                 if(map[i][j] == 1 && !visited[i][j]) {
@@ -53,14 +43,6 @@ public class boj_7576 {
             }
         }
         result = BFS();
-
-        // test
-//        for(int i=0 ; i<N ; i++) {
-//            for(int j=0 ; j<M ; j++) {
-//                System.out.print(map[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
 
         // map에 0이 남아 있는지 확인
         flag = true;
@@ -106,39 +88,6 @@ public class boj_7576 {
 
         return cnt-1;
     }
-
-//    public static int BFS(int x, int y) {
-//        Queue<Tomato> queue = new LinkedList<>();
-//        queue.add(new Tomato(x, y));
-//
-//        visited[x][y] = true;
-//        cnt = 0;
-//
-//        while (!queue.isEmpty()) {
-//            flag = false;
-//            int size = queue.size();
-//
-//            for(int i=0 ; i<size ; i++) {
-//                Tomato now = queue.poll();
-//
-//                for(int j=0 ; j<4 ; j++) {
-//                    nx = now.x + dx[j];
-//                    ny = now.y + dy[j];
-//                    flag = true;
-//
-//                    if(rangeCheck() && map[nx][ny] == 0 && !visited[nx][ny]) {
-//                        queue.add(new Tomato(nx, ny));
-//                        map[nx][ny] = 1;
-//                        visited[nx][ny] = true;
-//                    }
-//                }
-//            }
-//
-//            cnt++;
-//        }
-//
-//        return cnt-1;
-//    }
 
     public static boolean rangeCheck() {
         return nx >= 0 && nx < N
