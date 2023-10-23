@@ -1,10 +1,12 @@
-package swea;
+package swea.D1;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
-public class swea_1545 {
-    // 거꾸로 출력해 보아요
+public class swea_1933 {
+    // 간단한 N의 약수
 
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
@@ -12,7 +14,9 @@ public class swea_1545 {
 
         int n = sc.nextInt();
 
-        for(int i = n ; i>=0 ; i--) sb.append(i + " ");
+        for(int i=1 ; i<=n ; i++) {
+            if(n % i == 0) sb.append(i + " ");
+        }
 
         System.out.println(sb);
     }
