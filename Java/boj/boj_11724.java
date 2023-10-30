@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class boj11724 {
+public class boj_11724 {
     // 연결 요소의 개수
     private static int n, m;
     private static int[][] graph;
