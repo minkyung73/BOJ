@@ -22,36 +22,6 @@ public class boj_13549 {
 
     }
 
-    /*
-    public static void BFS(int node) {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.offer(node);
-        visited[node] = true;
-        sec[node] = 0;
-
-        while (!queue.isEmpty()) {
-            int p = queue.poll();
-            if (p == k) break;
-
-            System.out.print(p + ":" + sec[p] + "\t");
-
-            int[] new_node_arr = {p - 1, p + 1, p * 2};
-            for (int i = 0; i < 3; i++) {
-                int new_node = new_node_arr[i];
-
-                if (rangeCheck(new_node) && !visited[new_node]) {
-                    queue.offer(new_node);
-                    visited[new_node] = true;
-
-                    if(i == 2) sec[new_node] = sec[p];
-                    else sec[new_node] = sec[p] + 1;
-                }
-            }
-            System.out.println(queue);
-        }
-    }
-     */
-
     public static void BFS() {
         Queue<Node> queue = new LinkedList<>();
         queue.offer(new Node(n, 0));
