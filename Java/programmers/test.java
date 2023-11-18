@@ -16,7 +16,7 @@ public class test {
         solution(name, yearning, photo);
         Stack<String> stack = new Stack<>();
 
-        
+
     }
 
     public static int[] solution(String[] name, int[] yearning, String[][] photo) {
@@ -28,6 +28,7 @@ public class test {
 
             }
         }
+
 
         return answer;
     }
