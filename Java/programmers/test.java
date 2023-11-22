@@ -14,9 +14,15 @@ public class test {
         Stack<String> stack = new Stack<>();
 
         Arrays.sort(name, (o1, o2) -> o1.length() < o2.length() ? -1 : 1);
+        List<Integer> list = new ArrayList<>();
+        list.add(2);
+        list.add(2);
+        list.add(2);
+        list.add(2);
+        Object[] arr = list.toArray();
 
-        for(int i=0 ; i<name.length ; i++)
-            System.out.println(name[i]);
+        for(int i=0 ; i<arr.length ; i++)
+            System.out.println(arr[i]);
     }
 
     public static int[] solution(String[] name, int[] yearning, String[][] photo) {
