@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class boj_1967 {
-    // 트리의 지름
+    // 트리의 `지름`
     private static ArrayList<Node> list[];
     private static boolean visited[];
     private static int dist=0, farthestNode=0;
