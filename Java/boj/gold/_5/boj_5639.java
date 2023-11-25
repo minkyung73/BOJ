@@ -37,12 +37,6 @@ public class boj_5639 {
             this.root = root;
         }
 
-        public Node(int root, Node left, Node right) {
-            this.root = root;
-            this.left = left;
-            this.right = right;
-        }
-
         public void insert(int node) {
             if(node < this.root) {
                 if(this.left == null)
