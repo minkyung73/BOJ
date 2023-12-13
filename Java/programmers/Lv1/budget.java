@@ -1,21 +1,28 @@
 package programmers.Lv1;
 
+import java.io.IOException;
 import java.util.*;
 
 class budget {
     // greedy
-    public int solution(int[] d, int budget) {
+    public static void main(String[] args) throws IOException {
+        int[] d = {1, 3, 2, 5, 4};
+        int budget = 9;
+
+        System.out.println(solution(d, budget));
+    }
+
+    public static int solution(int[] d, int budget) {
         int answer = 0;
 
         Arrays.sort(d);
-        int sum = 0;
-        for(int i=0 ; i<d.length ; i++) {
-            if(sum + d[i] <= budget) {
-                sum += d[i];
-                answer++;
-            }
 
-            if(sum >= budget) break;
+        for(int i=0 ; i<d.length ; i++) {
+            if(d[i] <= budget) {
+                answer++;
+                budget -= d[i];
+            }
+            else break;
         }
 
         return answer;
