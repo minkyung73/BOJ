@@ -1,48 +1,63 @@
 package programmers.Lv2;
 
 
+import java.io.IOException;
 import java.util.*;
 
 class word_chain {
-    public int[] solution(int n, String[] words) {
-        int[] answer = {0, 0};
-        List<String> words_list = new ArrayList<>();
-        String end_w = "";
-        int player = 0;
-        int cnt = 0;
+    public static void main(String[] args) throws IOException {
+        int n = 3;
+        String[] words = {"tank", "kick", "know", "wheel", "land", "dream", "mother", "robot", "tank"};
+
+        System.out.println(Arrays.toString(solution(n, words)));
+
+    }
+
+    public static int[] solution(int n, String[] words) {
+        int[] answer = {0, 0};  // 번호, 차례
+
+        int idx = 0;
         boolean flag = true;
+        List<String> duplicatedWords = new ArrayList<>();
 
-        // 끝말잇기 시작
         for(int i=0 ; i<words.length ; i++) {
-            player++;
-            String word = words[i];
 
-            if(i==0) {
-                end_w = String.valueOf(word.charAt(word.length()-1));
-                words_list.add(word);
-                continue;
-            }
-
-            if(word.length() == 1 || words_list.contains(word)
-                    || !(String.valueOf(word.charAt(0)).equals(end_w)) ) {
-                // 탈락
-                flag = false;
-                cnt = i + 1;
+            // 조건 1. 한 글자인 경우
+            if(words.length == 1) {
+                idx = i+1;
                 break;
             }
-            else {
-                end_w = String.valueOf(word.charAt(word.length()-1));
-                words_list.add(word);
+
+            // 조건 2. 이전에 등장한 단어
+            if(!duplicatedWords.contains(words[i])) {
+                if(i==0) {
+                    duplicatedWords.add(words[i]);
+                    continue;
+                }
+
+                // 조건 3. 이전 단어의 마지막 글자로 시작하지 않는 경우 (첫번째 시작은 검증 X)
+                // 이전 단어의 마지막 글자
+                String pre_word = words[i-1];
+                char last_pre_w = pre_word.charAt(pre_word.length()-1);
+
+                if(words[i].charAt(0) == last_pre_w) {
+                    duplicatedWords.add(words[i]);
+                }
+                else {
+                    idx = i+1;
+                    flag = false;
+                    break;  // 조건 3
+                }
             }
-
-            if(player > n)
-                player %= n;
+            else {
+                idx = i+1;
+                flag = false;
+                break;  // 조건 2
+            }
         }
 
-        if(!flag) {
-            answer[0] = cnt % n == 0 ? n : cnt % n;
-            answer[1] = cnt % n == 0 ? cnt / n : cnt / n + 1;
-        }
+        answer[0] = idx % n == 0 && !flag ? n : idx % n;
+        answer[1] = idx % n ==0 ? idx / n : idx / n + 1;
 
         return answer;
     }
