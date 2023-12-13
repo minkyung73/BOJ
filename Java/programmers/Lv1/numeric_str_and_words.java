@@ -1,24 +1,29 @@
 package programmers.Lv1;
 
+import java.io.IOException;
 import java.util.*;
 
 class numeric_str_and_words {
-    public int solution(String s) {
+
+    public static void main(String[] args) throws IOException {
+        String s = "one4seveneight";
+
+        System.out.println(solution(s));
+    }
+
+    public static int solution(String s) {
         int answer = 0;
 
-        List<String> numbers = new ArrayList<>(
+        List<String> str_arr = new ArrayList<>(
                 Arrays.asList("zero", "one", "two", "three", "four",
-                        "five", "six", "seven", "eight", "nine"));
+                "five", "six", "seven", "eight", "nine"));
 
         for(int i=0 ; i<10 ; i++) {
-            String num = numbers.get(i);
-
-            while(s.contains(num)) {
-                s = s.replace(num, String.valueOf(i));
+            while (s.contains(str_arr.get(i))) {
+                s = s.replace(str_arr.get(i), String.valueOf(i));
             }
         }
 
-        answer = Integer.parseInt(s);
-        return answer;
+        return Integer.parseInt(s);
     }
 }
