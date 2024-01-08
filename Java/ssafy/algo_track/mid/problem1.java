@@ -1,4 +1,4 @@
-package ssafy.algo_track;
+package ssafy.algo_track.mid;
 
 import java.io.BufferedReader;
 import java.io.IOException;
