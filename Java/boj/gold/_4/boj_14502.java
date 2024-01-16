@@ -39,8 +39,8 @@ public class boj_14502 {
         System.out.println(answer);
     }
 
-    public static void DFS(int wall) {
-        if(wall == 3) {
+    public static void DFS(int depth) {
+        if(depth == 3) {
             BFS();
             return ;
         }
@@ -49,7 +49,7 @@ public class boj_14502 {
             for (int j = 0; j < m; j++) {
                 if(map[i][j] == 0) {
                     map[i][j] = 1;
-                    DFS(wall+1);
+                    DFS(depth+1);
                     map[i][j] = 0;
                 }
             }
@@ -57,13 +57,55 @@ public class boj_14502 {
     }
 
     public static void BFS() {
+        int[][] virus_map = new int[n][m];
         Queue<Node> queue = new LinkedList<>();
+
+        // copy
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                virus_map[i][j] = map[i][j];
+            }
+        }
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-
+                if(virus_map[i][j] == 2)
+                    queue.offer(new Node(i, j));
             }
         }
+
+        while (!queue.isEmpty()) {
+            Node now = queue.poll();
+
+            for (int i = 0; i < 4; i++) {
+                int nx = now.x + dx[i];
+                int ny = now.y + dy[i];
+
+                if (checkRange(nx, ny) && virus_map[nx][ny] == 0) {
+                    virus_map[nx][ny] = 2;
+                    queue.offer(new Node(nx, ny));
+                }
+            }
+        }
+
+        count(virus_map);
+    }
+
+    public static void count(int[][] virus_map) {
+        int temp = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if(virus_map[i][j] == 0)
+                    temp++;
+            }
+        }
+
+        answer = Math.max(answer, temp);
+    }
+
+    public static boolean checkRange(int x, int y) {
+        return x >= 0 && x < n && y >= 0 & y < m;
     }
 
     public static class Node {
