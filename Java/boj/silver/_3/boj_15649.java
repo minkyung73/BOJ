@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class boj_15649 {
+	// N과 M (1) - 수열
 	static int n, m;
 	static int[] selected;
 	static boolean[] visited;
