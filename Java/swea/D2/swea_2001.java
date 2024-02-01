@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 
 public class swea_2001 {
     // 파리 퇴치
-    private static int n, m, pre = 0, cur = 0;
+    private static int n, m;
     private static int[][] arr;
     private static int[] dp;
 
@@ -19,25 +19,28 @@ public class swea_2001 {
         for(int i=0 ; i<T ; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
 
+            // input
             n = Integer.parseInt(st.nextToken());
             m = Integer.parseInt(st.nextToken());
             arr = new int[n][n];
             for(int j=0 ; j<n ; j++) {
                 st = new StringTokenizer(br.readLine());
-                for(int k=0 ; k<n ; k++)
-                    arr[j][k] = Integer.parseInt(st.nextToken());
+                for(int k=0 ; k<n ; k++) arr[j][k] = Integer.parseInt(st.nextToken());
             }
-
-            int answer = fly();
-            sb.append("#" + (i+1) + " " + answer + "\n");
+            
+            // function call
+            sb.append("#" + (i+1) + " " +  fly() + "\n");
         }
+        
+        // output
         System.out.println(sb);
     }
 
     public static int fly() {
-        int result = 0, idx = 0, sum = 0;
+        int result = 0, idx = 0;
         dp = new int[n * (n-m+1)];
 
+        // 
         for(int i=0 ; i<n ; i++) {
             for(int j=0 ; j<n-m+1 ; j++) {
                 for(int k = j ; k < j+m ; k++) {
@@ -47,6 +50,7 @@ public class swea_2001 {
             }
         }
 
+        // 
         for(int i=0 ; i<(n-m+1)*(n-m+1) ; i++) {
             int temp = 0;
             idx = i;
