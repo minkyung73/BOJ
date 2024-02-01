@@ -34,6 +34,8 @@ public class swea_1210_loop {
 					}
 				}
 			}
+			
+			System.out.println("test: " + map[32][97]);
 
 			// function call
 			sb.append("#").append(T).append(" ").append(Ladder()).append("\n");
@@ -45,16 +47,33 @@ public class swea_1210_loop {
 
 	public static int Ladder() {
 		int cnt = 1;
+		
+		
 		while (x != 0) {
+			//test
+			if(cnt == 20) {
+				for(int i=0 ;i<100 ; i++) {
+					for(int j=0 ; j<100;  j++) {
+						System.out.print(visited[i][j] ? "T " : "F ");
+					}
+					System.out.println();
+				}
+			}
+			visited[x][y] = true;
+			
 			if (checkRange(x, y-1) && !visited[x][y-1] && map[x][y-1] == 1) {
 				// 왼쪽 길이 있다면
 				System.out.println("[L (" + cnt++ + ")]: " + x + " " + y);
 				for(int i=y-1 ; i >= 0 ; i--) {
 					visited[x][i] = true;
-					if(map[x][i] == 1) continue;
 					
-					if(map[x][i] == 0) {
-						y = i+1;
+//					if(map[x][i] == 0) {
+//						y = i+1;
+//						break;
+//					}
+					
+					if(checkRange(x, i-1) && map[x][i-1] == 0) {
+						y = i;
 						break;
 					}
 				}
@@ -64,10 +83,14 @@ public class swea_1210_loop {
 				System.out.println("[R (" + cnt++ + ")]: " + x + " " + y);
 				for(int i=y+1 ; i<100 ; i++) {
 					visited[x][i] = true;
-					if(map[x][i] == 1) continue;
 					
-					if(map[x][i] == 0) {
-						y = i-1;
+//					if(map[x][i] == 0) {
+//						y = i-1;
+//						break;
+//					}
+					
+					if(checkRange(x, i+1) && map[x][i+1] == 0) {
+						y = i;
 						break;
 					}
 				}
