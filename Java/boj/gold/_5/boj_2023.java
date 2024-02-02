@@ -14,9 +14,7 @@ public class boj_2023 {
 		// initialize
 		n = Integer.parseInt(br.readLine());
 		size = ((int) Math.pow(10, n)) ;
-		
-		
-		//
+
 		for(int i=2 ; i<9 ; i++) {
 			if(prime(i)) find(1, i);
 		}
@@ -24,7 +22,7 @@ public class boj_2023 {
 		// output
 		System.out.println(sb);
 	}
-	
+
 	private static void find(int digit, int num) {
 		// basis part
 		if(digit == n) {
@@ -46,9 +44,9 @@ public class boj_2023 {
 		for(int i=2 ; i<=Math.sqrt(temp) ; i++) {
 			if(temp % i == 0) return false;
 		}
-		
+
 		return true;
 	}
 
-	
+
 }
