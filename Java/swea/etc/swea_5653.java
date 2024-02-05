@@ -43,9 +43,7 @@ public class swea_5653 {
 			}
 			
 			//
-			for(int j=0 ; j<k ; j++) {
-				
-			}
+			
 			
 			// result
 			sb.append("#").append(i).append(" ").append("res").append("\n");
@@ -57,20 +55,7 @@ public class swea_5653 {
 
 	// function definition
 	public static void BFS(int x, int y) {
-		Queue<Node> queue = new LinkedList<>();
-		queue.offer(new Node(x, y, 2));
-		visited[x][y] = true;
 		
-		while(!queue.isEmpty()) {
-			Node now = queue.poll();
-			
-			for(int i=0 ; i<4 ; i++) {
-				int nx = now.x + dx[i];
-				int ny = now.y + dy[i];
-				
-//				if(checkRange(nx, ny) && now.status == )
-			}
-		}
 	}
 	
 	// function definition
@@ -85,10 +70,11 @@ public class swea_5653 {
 		int status;	// 0: 죽은 상태 / 1: 활성 상태 / 2: 비활성 상태
 		int activeHour;
 		
-		public Node(int x, int y, int status) {
+		public Node(int x, int y, int status, int activeHour) {
 			this.x = x;
 			this.y = y;
 			this.status = status;
+			this.activeHour = activeHour;
 		}
 	}
 }
