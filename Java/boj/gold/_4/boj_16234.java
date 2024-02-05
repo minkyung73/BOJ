@@ -55,7 +55,7 @@ public class boj_16234 {
 
 						if (checkRange(nx, ny) 
 								&& checkPopulation(new Node(i, j), new Node(nx, ny)) ) {
-							
+							System.out.println("(" + i + "," + j + ")"); 
 							BFS(i, j);
 							flag = true;
 							break;
@@ -65,16 +65,7 @@ public class boj_16234 {
 			}
 
 			if (flag) day++;
-
-//			if(day == 2) {				
-//				for (int i = 0; i < list.size(); i++) {
-//					for(int j=0 ; j<list.get(i).size() ;j++) {
-//						System.out.println(list.get(i).get(j).x + " " + list.get(i).get(j).y);
-//					}
-//					System.out.println("===========");
-//				}
-//			}
-
+			
 			// update population
 			for (int i = 0; i < average.size(); i++) {
 				for (int j = 0; j < list.size(); j++) {

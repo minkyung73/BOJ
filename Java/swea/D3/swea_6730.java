@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-public class boj_6730 {
+public class swea_6730 {
     // 장애물 경주 난이도
     private static int n;
     private static int[] arr;
