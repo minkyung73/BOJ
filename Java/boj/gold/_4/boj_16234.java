@@ -11,7 +11,6 @@ import java.util.StringTokenizer;
 
 public class boj_16234 {
 	// 인구이동
-	
 	static int n, l, r;
 	static int[][] map;
 	static boolean[][] visited;
