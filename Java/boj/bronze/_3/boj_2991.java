@@ -7,35 +7,48 @@ import java.io.Reader;
 import java.util.StringTokenizer;
 
 public class boj_2991 {
+	// 사나운 개 
+	static int[][] dog;
+	
 	public static void main(String[] args) throws IOException{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
+		StringBuilder sb = new StringBuilder();
 		
-		int a = Integer.parseInt(st.nextToken());
-		int b = Integer.parseInt(st.nextToken());
-		int c = Integer.parseInt(st.nextToken());
-		int d = Integer.parseInt(st.nextToken());
+		// initialize
+		dog = new int[2][2];
 		
-		st = new StringTokenizer(br.readLine());
-		int[] arr = new int[3];
-		arr[0] = Integer.parseInt(st.nextToken());
-		arr[1] = Integer.parseInt(st.nextToken());
-		arr[2] = Integer.parseInt(st.nextToken());
-		
-		for(int i=0 ; i<3 ; i++) {
-			int cnt = 0;
-			int temp;
-			
-			// case a,b
-			temp = arr[i] % (a+b);
-			
-			
-			// case c,d
-			temp = arr[i] % (c+d);
-			
-			
-			System.out.println(cnt);
+		// dog input
+		for(int i=0 ; i<2 ; i++) {
+			for(int j=0 ; j<2 ; j++) {
+				dog[i][j] = Integer.parseInt(st.nextToken());
+			}
 		}
+		
+		// arrive time input
+		st = new StringTokenizer(br.readLine());
+		for(int i=0 ; i<3 ; i++) {
+			int person = Integer.parseInt(st.nextToken());
+			sb.append(attack(person)).append("\n");	// function call
+		}
+		
+		// output
+		System.out.println(sb);
 	}
 
+	public static int attack(int arrive) {
+		int ans = 0, temp;
+		
+		// dog 1
+		temp = arrive;
+		temp %= (dog[0][0] + dog[0][1]);
+		if(temp != 0 && temp <= dog[0][0]) ans++;
+		
+		// dog 2
+		temp = arrive;
+		temp %= (dog[1][0] + dog[1][1]);
+		if(temp != 0 && temp <= dog[1][0]) ans++;
+		
+		return ans;
+	}
 }
