@@ -10,15 +10,25 @@ import java.util.StringTokenizer;
 public class boj_2178 {
     // 미로 탐색
 
-    private static int n, m, cnt = 0;
-    private static int[][] map;
-    private static boolean[][] visited;
-    private static int[] dir_X = {0, 0, -1, 1};
-    private static int[] dir_Y = {-1, 1, 0, 0};
-    private static int next_X, next_Y;
+    static int n, m;
+    static int[][] map;
+    static boolean[][] visited;
+    static int[] dx = {0, 0, -1, 1};
+    static int[] dy = {-1, 1, 0, 0};
+    static int result = Integer.MAX_VALUE;
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        init();
+        
+        BFS(0, 0);
+        System.out.println(map[n-1][m-1]);
+        
+//        DFS(0, 0, 1);
+//        System.out.println(result);
+    }
+    
+    public static void init() throws IOException {
+    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         n = Integer.parseInt(st.nextToken());
@@ -33,38 +43,60 @@ public class boj_2178 {
                 map[i][j] = Integer.parseInt(String.valueOf(str.charAt(j)));
             }
         }
-
-        // DFS
-        visited[0][0] = true;
-        BFS(0, 0);
-
-        System.out.println(map[n-1][m-1]);
     }
 
     public static void BFS(int x, int y) {
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[] {x, y});
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(new Node(x, y));
+        visited[0][0] = true;
 
         while (!queue.isEmpty()) {
-            int[] now = queue.poll();
-            int nowX = now[0];
-            int nowY = now[1];
+            Node now = queue.poll();
 
             for(int i=0 ; i<4 ; i++) {
-                next_X = nowX + dir_X[i];
-                next_Y = nowY + dir_Y[i];
+                int nx = now.x + dx[i];
+                int ny = now.y + dy[i];
 
-                if(rangeCheck() && !visited[next_X][next_Y] && map[next_X][next_Y] == 1) {
-                    queue.add(new int[] {next_X, next_Y});
-                    map[next_X][next_Y] = map[nowX][nowY] + 1;
-                    visited[next_X][next_Y] = true;
+                if(checkRange(nx, ny) && !visited[nx][ny] && map[nx][ny] == 1) {
+                    queue.add(new Node(nx, ny));
+                    map[nx][ny] = map[now.x][now.y] + 1;
+                    visited[nx][ny] = true;
                 }
             }
         }
     }
 
-    public static boolean rangeCheck() {
-        return next_X >= 0 && next_X < n
-                && next_Y >= 0 && next_Y < m;
+    public static void DFS(int x, int y, int cnt) {
+    	// basis part
+    	if(x == n-1 && y == m-1) {
+    		result = Math.min(result, cnt);
+    		return ;
+    	}
+    	
+    	// inductive part
+    	for(int i=0 ; i<4 ; i++) {
+    		int nx = x + dx[i];
+    		int ny = y + dy[i];
+    		
+    		if(checkRange(nx, ny) && !visited[nx][ny] && map[nx][ny] == 1) {
+    			visited[nx][ny] = true;
+    			DFS(nx, ny, cnt+1);
+    		}
+    	}
+    }
+    
+    
+    public static boolean checkRange(int x, int y) {
+        return x >= 0 && x < n && y >= 0 && y < m;
+    }
+    
+    public static class Node {
+    	int x;
+    	int y;
+    	
+    	public Node(int x, int y) {
+    		this.x = x;
+    		this.y = y;
+    	}
     }
 }
