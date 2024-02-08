@@ -18,13 +18,26 @@ public class boj_11286 {
             }
         }
     }
+    
+    public static class Cumstom implements Comparator<Integer> {
+
+		@Override
+		public int compare(Integer o1, Integer o2) {
+			if(Math.abs(o1) == Math.abs(o2)) {
+				return o1 - o2;
+			} else {
+				return Math.abs(o1) - Math.abs(o2);
+			}
+		}
+    	
+    }
 
     public static void main(String[] args) throws IOException {
         // 절댓값 힙
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        PriorityQueue<Integer> absQueue = new PriorityQueue<>(new CustomComparator());
+        PriorityQueue<Integer> absQueue = new PriorityQueue<>(new Cumstom());
 
         for(int i=0 ; i<n ; i++) {
             int input = Integer.parseInt(br.readLine());
