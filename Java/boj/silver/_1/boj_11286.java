@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class boj_11286 {
+	// 절댓값 힙
     public static class CustomComparator implements Comparator<Integer> {
 		@Override
 		public int compare(Integer o1, Integer o2) {
@@ -16,7 +17,6 @@ public class boj_11286 {
     }
 
     public static void main(String[] args) throws IOException {
-        // 절댓값 힙
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
