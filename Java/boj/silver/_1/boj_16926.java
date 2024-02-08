@@ -13,7 +13,6 @@ public class boj_16926 {
     public static void main(String[] args) throws IOException{
         init();
 
-
     }
 
     public static void init() throws IOException {
@@ -32,6 +31,5 @@ public class boj_16926 {
             }
         }
     }
-
 
 }
