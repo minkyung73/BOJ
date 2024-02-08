@@ -7,27 +7,10 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class boj_11286 {
-    private static class CustomComparator implements Comparator<Integer> {
-        @Override
-        public int compare(Integer o1, Integer o2) {
-            if(Math.abs(o1) > Math.abs(o2)) return 1;
-            else if(Math.abs(o1) < Math.abs(o2)) return -1;
-            else {
-                if(o1 > o2) return 1;
-                else return -1;
-            }
-        }
-    }
-    
-    public static class Cumstom implements Comparator<Integer> {
-
+    public static class CustomComparator implements Comparator<Integer> {
 		@Override
 		public int compare(Integer o1, Integer o2) {
-			if(Math.abs(o1) == Math.abs(o2)) {
-				return o1 - o2;
-			} else {
-				return Math.abs(o1) - Math.abs(o2);
-			}
+			return Math.abs(o1) == Math.abs(o2) ? o1 - o2 : Math.abs(o1) - Math.abs(o2);
 		}
     	
     }
@@ -37,7 +20,7 @@ public class boj_11286 {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        PriorityQueue<Integer> absQueue = new PriorityQueue<>(new Cumstom());
+        PriorityQueue<Integer> absQueue = new PriorityQueue<>(new CustomComparator());
 
         for(int i=0 ; i<n ; i++) {
             int input = Integer.parseInt(br.readLine());
