@@ -7,20 +7,16 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class boj_11286 {
-    private static class CustomComparator implements Comparator<Integer> {
-        @Override
-        public int compare(Integer o1, Integer o2) {
-            if(Math.abs(o1) > Math.abs(o2)) return 1;
-            else if(Math.abs(o1) < Math.abs(o2)) return -1;
-            else {
-                if(o1 > o2) return 1;
-                else return -1;
-            }
-        }
+	// 절댓값 힙
+    public static class CustomComparator implements Comparator<Integer> {
+		@Override
+		public int compare(Integer o1, Integer o2) {
+			return Math.abs(o1) == Math.abs(o2) ? o1 - o2 : Math.abs(o1) - Math.abs(o2);
+		}
+    	
     }
 
     public static void main(String[] args) throws IOException {
-        // 절댓값 힙
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
