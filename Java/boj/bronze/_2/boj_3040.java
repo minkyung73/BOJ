@@ -8,20 +8,29 @@ import java.util.Arrays;
 import java.util.List;
 
 public class boj_3040 {
-	static int[] arr, res;
+	// 백설 공주와 일곱 난쟁이
+	static int[] arr;
+	static int sum;
 	
 	public static void main(String[] args) throws IOException {
+		init();
+		find();
+		print();
+	}
+
+	public static void init() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
 		
 		arr = new int[9];
-		int sum = 0;
+		sum = 0;
 		
 		for(int i=0 ; i<9 ; i++) {
 			arr[i] = Integer.parseInt(br.readLine());
 			sum += arr[i];
 		}
-		
+	}
+
+	public static void find() {
 		L: for(int i=0 ; i<9 ; i++) {
 			for(int j=0 ; j<9 ; j++) {
 				if(i == j) continue;
@@ -35,8 +44,11 @@ public class boj_3040 {
 				}
 			}
 		}
+	}
+
+	public static void print() {
+		StringBuilder sb = new StringBuilder();
 		
-//		Arrays.sort(arr);
 		for(int i=0 ; i<9 ; i++) {
 			if(arr[i] != 0)
 				sb.append(arr[i]).append("\n");
@@ -44,5 +56,4 @@ public class boj_3040 {
 		
 		System.out.println(sb);
 	}
-
 }
