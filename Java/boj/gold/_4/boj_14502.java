@@ -8,6 +8,8 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class boj_14502 {
+	// 연구소 
+	
     static int n, m;
     static int[][] map;
     static boolean[][] visited;
@@ -16,7 +18,13 @@ public class boj_14502 {
     static int answer = Integer.MIN_VALUE;
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        init();
+        DFS(0);
+        System.out.println(answer);
+    }
+    
+    public static void init() throws IOException {
+    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         // initialize
@@ -31,20 +39,16 @@ public class boj_14502 {
                 map[i][j] = Integer.parseInt(st.nextToken());
             }
         }
-
-        // function call
-        DFS(0);
-
-        // output
-        System.out.println(answer);
     }
 
     public static void DFS(int depth) {
-        if(depth == 3) {
+        // basis part
+    	if(depth == 3) {
             BFS();
             return ;
         }
 
+        // inductive part
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if(map[i][j] == 0) {
@@ -61,12 +65,10 @@ public class boj_14502 {
         Queue<Node> queue = new LinkedList<>();
 
         // copy
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                virus_map[i][j] = map[i][j];
-            }
-        }
+        for (int i = 0; i < n; i++)
+        	virus_map[i] = map[i].clone();
 
+        // 초기 바이러스의 위치 offer
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if(virus_map[i][j] == 2)
@@ -74,6 +76,7 @@ public class boj_14502 {
             }
         }
 
+        // 바이러스 전파
         while (!queue.isEmpty()) {
             Node now = queue.poll();
 
@@ -88,6 +91,7 @@ public class boj_14502 {
             }
         }
 
+        // 안전영역 크기 구하기
         count(virus_map);
     }
 
