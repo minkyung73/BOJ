@@ -11,38 +11,57 @@ import java.util.StringTokenizer;
 public class boj_1931 {
     // 회의실 배정
     private static int n;
-    private static int[][] arr;
-//    private static boolean[] visited;
+    private static Meeting[] meetings;
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        init();
+        System.out.println(count());
+    }
+    
+    public static void init() throws IOException {
+    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         n = Integer.parseInt(br.readLine());
-        arr = new int[n][2];
+        meetings = new Meeting[n];
 
         for(int i=0 ; i<n ; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            arr[i][0] = Integer.parseInt(st.nextToken());
-            arr[i][1] = Integer.parseInt(st.nextToken());
+            meetings[i] = new Meeting(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
         }
+        Arrays.sort(meetings);
+    }
+    
+    public static int count() {
+    	int cnt = 1;
+    	int end = meetings[0].end;
+    	
+    	for(int i=1 ; i<n ; i++) {
+    		if(end <= meetings[i].start) {
+    			end = meetings[i].end;
+    			cnt++;
+    		}
+    	}
+    	
+    	return cnt;
+    }
+    
+    public static class Meeting implements Comparable<Meeting>{
+    	int start, end;
 
-        Arrays.sort(arr, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return o1[1] != o2[1] ? o1[1] - o2[1] : o1[0] - o2[0];
-            }
-        });
+		public Meeting(int start, int end) {
+			this.start = start;
+			this.end = end;
+		}
 
-        int cnt = 0;
-        int time = 0;
-        for(int i=0 ; i<n ; i++) {
-            if(arr[i][0] >= time) {
-                time = arr[i][1];
-                cnt++;
-            }
-        }
+		@Override
+		public int compareTo(Meeting o) {
+			return this.end != o.end ? this.end - o.end : this.start - o.start;
+		}
 
-        // output
-        System.out.println(cnt);
+		@Override
+		public String toString() {
+			return "Meeting [start=" + start + ", end=" + end + "]";
+		}
+		
     }
 }
