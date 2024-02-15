@@ -1,5 +1,6 @@
 package swea.etc;
 
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,6 +12,8 @@ public class swea_5644 {
 	
 	static int M, A;	// 이동 시간, BC의 개수
 	static int[] moveA, moveB;	// 이동 정보
+	static Point AA, BB;
+	static int sumA, sumB;
 	
 	// 이동 방향: 상, 우, 하, 좌
 	static int[] dx = {0, -1, 0, 1, 0};
@@ -26,7 +29,7 @@ public class swea_5644 {
 		int T = Integer.parseInt(br.readLine());
 		for(int i=1 ; i<=T ; i++) {
 			init(br);
-			
+			for(int j=0 ; j<M ; j++) move(i);
 		}
 	}
 	
@@ -36,8 +39,14 @@ public class swea_5644 {
 		M = Integer.parseInt(st.nextToken());
 		A = Integer.parseInt(st.nextToken());
 		
+		AA = new Point(0, 0);
+		BB = new Point(9, 9);
+		
 		moveA = new int[M];
 		moveB = new int[M];
+		
+		sumA = 0;
+		sumB = 0;
 		
 		st = new StringTokenizer(br.readLine());
 		for(int i=0 ; i<M ; i++) moveA[i] = Integer.parseInt(st.nextToken());
@@ -62,7 +71,6 @@ public class swea_5644 {
 		
 		// 해당 좌표에서 충전할 수 있는 값 구하기
 		getP();
-		
 	}
 	
 	public static void fillBC(int x, int y, int c, int num) {
@@ -100,6 +108,13 @@ public class swea_5644 {
 	
 	public static boolean checkRange(int x, int y) {
 		return x >= 0 && x < 10 && y >= 0 && y < 10;
+	}
+	
+	public static void move(int sec) {
+		AA = new Point(AA.x + dx[moveA[sec]], AA.y + dy[moveA[sec]]);
+		BB = new Point(BB.x + dx[moveB[sec]], BB.y + dy[moveB[sec]]);
+		
+		
 	}
 	
 	public static class BC {
