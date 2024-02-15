@@ -24,7 +24,7 @@ public class boj_1655 {
 			else minHeap.offer(temp);
 			
 			swap();
-//			System.out.println(maxHeap + " " + minHeap);
+			System.out.println(maxHeap + " " + minHeap);
 			
 			sb.append(maxHeap.peek() + "\n");
 		}
