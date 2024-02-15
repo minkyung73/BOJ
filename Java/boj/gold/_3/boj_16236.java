@@ -63,7 +63,6 @@ public class boj_16236 {
 
 	public static void babyShark() {
 		while (!fishAll.isEmpty()) {
-//			TreeSet<Fish> fishList = new TreeSet<>(new CustomComparator());
 			getFishList();
 			int size = fishList.size();
 			
@@ -156,7 +155,6 @@ public class boj_16236 {
 			
 			return o1.x != o2.x ? o1.x - o2.x : o1.y - o2.y;
 		}
-
 	}
 
 	public static class Fish {
