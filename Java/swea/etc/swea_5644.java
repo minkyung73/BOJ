@@ -114,7 +114,21 @@ public class swea_5644 {
 		AA = new Point(AA.x + dx[moveA[sec]], AA.y + dy[moveA[sec]]);
 		BB = new Point(BB.x + dx[moveB[sec]], BB.y + dy[moveB[sec]]);
 		
-		
+		if(equals(AA, BB)) {
+			
+		}
+		else {
+			
+		}
+	}
+	
+	// 같은 영역인지 검사
+	public static boolean equals(Point a, Point b) {
+		for(int i=0 ; i<A ; i++) {
+			if(usedBC[a.x][a.y][i] != usedBC[b.x][b.y][i])
+				return false;
+		}
+		return true;
 	}
 	
 	public static class BC {
