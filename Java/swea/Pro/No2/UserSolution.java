@@ -3,107 +3,123 @@ package swea.Pro.No2;
 import java.util.*;
 
 class UserSolution {
-    private TreeMap<Integer, TreeSet<Player>> players;
-    private int N, L;
 
-    public class CustomComparator implements Comparator<Player> {
-        @Override
-        public int compare(Player o1, Player o2) {
-            return o1.ability != o2.ability ? o2.ability - o1.ability : o1.id - o2.id;
-        }
-    }
+    private int N, L;
+    private int K;  // 한 리그에 들어갈 선수의 수
+    private int frontSize, lastSize;    // 한 리그 내 상위권과 하위권 선수의 수
+    private ArrayList<TreeSet<Player>> leagues;
 
     void init(int N, int L, int mAbility[]) {
-        players = new TreeMap<>();
         this.N = N;
         this.L = L;
+        K = N / L;
 
-        int idx = 0;
+        leagues = new ArrayList<>();
+        for(int i=0 ; i< 2 * L ; i++) leagues.add(new TreeSet<>(new CustomComparator()));
+
+        int id = 0;
+        frontSize = K % 2 == 0 ? K / 2 : K / 2 + 1;
+        lastSize = K - frontSize;
+
         for (int i = 0; i < L; i++) {
-            players.put(i, new TreeSet<>(new CustomComparator()));
-            for (int j = 0; j < N / L; j++)
-                players.get(i).add(new Player(mAbility[idx], idx++, i));
+            PriorityQueue<Player> players = new PriorityQueue<>(new CustomComparator());
+            for (int j = 0; j < K; j++) {
+                players.offer(new Player(mAbility[id], id));
+                id++;
+            }
+
+            for (int j = 0; j < frontSize ; j++)
+                leagues.get(i*2).add(players.poll());
+
+            for (int j = 0; j < lastSize ; j++)
+                leagues.get(i*2+1).add(players.poll());
+
         }
+
     }
 
     int move() {
-        // TODO: Queue 로 바꿀 수도 있을 듯? 뭐가 더 빠른지 보자
-        List<Player> move_list = new ArrayList<>();
         int sumId = 0;
 
-        // move_list
-        // [FIg. 4] 참조
-        for (int i = 0; i < L - 1; i++) {
-            Player last = players.get(i).last();
-            Player first = players.get(i + 1).first();
+        // 상위 리그 꼴찌와 하위 리그 1등 swap
+        for(int i=0 ; i<L-1 ; i++) {
+            Player last = leagues.get(i * 2 + 1).pollLast();
+            Player first = leagues.get((i+1) * 2).pollFirst();
 
-            sumId += last.id + first.id;
+            leagues.get(i*2 + 1).add(first);
+            leagues.get((i+1)*2).add(last);
 
-            move_list.add(last);
-            move_list.add(first);
+            sumId += last.id;
+            sumId += first.id;
         }
 
-        // index 문제!!!!!!
-        for (int i = 0; i < L - 1; i++)
-            swap(i, move_list.remove(0), move_list.remove(0));
+        // 리그 내 상위권 선수와 하위권 선수 swap
+        for (int i = 0; i < L; i++) {
+            Player high = leagues.get(i * 2).pollLast();
+            Player low = leagues.get(i * 2 + 1).pollFirst();
+
+            CustomComparator comparator = new CustomComparator();
+
+            if(comparator.compare(high, low) > 0) {   // swap
+                leagues.get(i*2).add(low);
+                leagues.get(i*2+1).add(high);
+            }
+            else {
+                leagues.get(i*2).add(high);
+                leagues.get(i*2+1).add(low);
+            }
+        }
 
         return sumId;
-    }
-
-    private void swap(int idx, Player p1, Player p2) {
-        players.get(idx).remove(p1);
-        players.get(idx+1).remove(p2);
-
-        players.get(idx).add(p2);
-        players.get(idx+1).add(p1);
     }
 
     int trade() {
-        List<Player> trade_list = new ArrayList<>();
+        Queue<Player> players = new LinkedList<>();
         int sumId = 0;
 
-        // trade_list
-        // [Fig. 6] 참조
-        for (int i = 0; i < L-1; i++) {
-            // TODO: 중간 값을 이렇게 빼는 게 맞나?
-            Player mid = findMid(players.get(i));
-            Player first = players.get(i + 1).first();
+        // 상위 리그 중간 등수와 하위 리그 1등 swap
+        for(int i=0 ; i<L-1 ; i++) {
+            Player mid = leagues.get(i * 2).pollLast();
+            Player first = leagues.get((i+1) * 2).pollFirst();
 
-            sumId += mid.id + first.id;
+            players.offer(mid);
+            players.offer(first);
 
-            trade_list.add(mid);
-            trade_list.add(first);
+            sumId += mid.id;
+            sumId += first.id;
         }
 
-        // swap
-        for (int i = 0; i < L - 1; i++)
-            swap(i, trade_list.remove(0), trade_list.remove(0));
+        for (int i = 0; i < L - 1; i++) {
+            leagues.get((i+1)*2).add(players.poll());
+            leagues.get((i)*2).add(players.poll());
+        }
+
+        // 리그 내 상위권 선수와 하위권 선수 swap
+        for (int i = 0; i < L; i++) {
+            Player high = leagues.get(i * 2).pollLast();
+            Player low = leagues.get(i * 2 + 1).pollFirst();
+
+            CustomComparator comparator = new CustomComparator();
+
+            if(comparator.compare(high, low) > 0) {   // swap
+                leagues.get(i*2).add(low);
+                leagues.get(i*2+1).add(high);
+            }
+            else {
+                leagues.get(i*2).add(high);
+                leagues.get(i*2+1).add(low);
+            }
+        }
 
         return sumId;
     }
 
-    public Player findMid(TreeSet<Player> players) {
-        Player higher = players.higher(players.first());
-        Player lower = players.lower(players.last());
+    class Player {
+        int ability, id;
 
-        while (true) {
-            if(higher == null || lower == null) break;
-            if(higher.equals(lower)) break;
-
-            higher = players.higher(higher);
-            lower = players.lower(lower);
-        }
-
-        return higher;
-    }
-
-    public class Player {
-        int ability, id, league;
-
-        public Player(int ability, int id, int league) {
+        public Player(int ability, int id) {
             this.ability = ability;
             this.id = id;
-            this.league = league;
         }
 
         @Override
@@ -111,14 +127,19 @@ class UserSolution {
             return "Player{" +
                     "ability=" + ability +
                     ", id=" + id +
-                    ", league=" + league +
                     '}';
         }
 
-        public boolean equals(Player p) {
-            return this.ability == p.ability
-                    && this.id == p.id
-                    && this.league == p.league;
+//        @Override
+//        public int compareTo(Player o) {
+//            return this.ability != o.ability ? o.ability - this.ability : this.id - o.id;
+//        }
+    }
+
+    class CustomComparator implements Comparator<Player> {
+        @Override
+        public int compare(Player o1, Player o2) {
+            return o1.ability != o2.ability ? o2.ability - o1.ability : o1.id - o2.id;
         }
     }
 }

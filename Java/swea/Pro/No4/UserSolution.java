@@ -5,7 +5,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 class UserSolution {
-
     private TreeSet<Student> students;
     private TreeMap<Integer, Student> Ids;
 

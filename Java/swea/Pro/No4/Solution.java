@@ -80,7 +80,7 @@ class Solution {
         long before = System.currentTimeMillis();
         int TC, MARK;
 
-        System.setIn(new java.io.FileInputStream("swea/Pro/No4/sample_input.txt"));
+//        System.setIn(new java.io.FileInputStream("swea/Pro/No4/sample_input.txt"));
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
