@@ -11,7 +11,7 @@ class Solution
     private final static int CMD_MOVECURSOR = 300;
     private final static int CMD_COUNT      = 400;
 
-    private final static UserSolution usersolution = new UserSolution();
+    private final static UserSolution3 usersolution = new UserSolution3();
 
     private static void String2Char(char[] buf, String str, int maxLen)
     {
@@ -89,7 +89,7 @@ class Solution
         long before = System.currentTimeMillis();
         int TC, MARK;
 
-        System.setIn(new java.io.FileInputStream("swea/Pro/No5/sample_input.txt"));
+        System.setIn(new java.io.FileInputStream("swea/Pro/No5/sample_input2.txt"));
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
