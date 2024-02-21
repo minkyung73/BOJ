@@ -61,8 +61,8 @@ public class boj_15683 {
 	public static void cctv(int idx, int sum) {
 		// basis part
 		if(idx == cctvList.size()) {
-			int cnt = getBlindSpot();
 //			blindSpot = Math.min(blindSpot, maxBlindSpot-sum);
+			int cnt = getBlindSpot();
 			blindSpot = Math.min(blindSpot, cnt);
 			return ;
 		}
