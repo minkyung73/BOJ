@@ -61,9 +61,7 @@ public class boj_15683 {
 	public static void cctv(int idx, int sum) {
 		// basis part
 		if(idx == cctvList.size()) {
-//			blindSpot = Math.min(blindSpot, maxBlindSpot-sum);
-			int cnt = getBlindSpot();
-			blindSpot = Math.min(blindSpot, cnt);
+			blindSpot = Math.min(blindSpot, maxBlindSpot-sum);
 			return ;
 		}
 		
@@ -83,18 +81,6 @@ public class boj_15683 {
 				nonWatch(cctv.x, cctv.y, dirCCTV[type][i][j]);
 		}
 	}
-	
-	private static int getBlindSpot() {
-		int cnt = 0;
-		
-		for(int i=0 ; i<n ; i++) {
-			for(int j=0 ;j<m ;j++) {
-				if(map[i][j] == 0) cnt++;
-			}
-		}
-		
-		return cnt;
-	}
 
 	private static int watch(int x, int y, int dir) {
 		int cnt = 0;
@@ -103,9 +89,9 @@ public class boj_15683 {
 			for(int i=y+1 ; i<m ; i++) {
 				if(map[x][i] == 6) break;
 				
-				if(map[x][i] == 0) {
+				if(map[x][i] <= 0) {
 					map[x][i] --;
-					cnt++;
+					if (map[x][i] == -1) cnt++;
 				}
 			}
 		}
@@ -113,9 +99,9 @@ public class boj_15683 {
 			for(int i = y-1 ; i>=0 ; i--) {
 				if(map[x][i] == 6) break;
 				
-				if(map[x][i] == 0) {
+				if(map[x][i] <= 0) {
 					map[x][i] --;
-					cnt++;
+					if (map[x][i] == -1) cnt++;
 				}
 			}
 		}
@@ -123,9 +109,9 @@ public class boj_15683 {
 			for(int i=x+1 ; i<n ; i++) {
 				if(map[i][y] == 6) break;
 				
-				if(map[i][y] == 0) {
+				if(map[i][y] <= 0) {
 					map[i][y] --;
-					cnt++;
+					if (map[i][y] == -1) cnt++;
 				}
 			}
 		}
@@ -133,9 +119,9 @@ public class boj_15683 {
 			for(int i=x-1 ; i>=0 ; i--) {
 				if(map[i][y] == 6) break;
 				
-				if(map[i][y] == 0) {
+				if(map[i][y] <= 0) {
 					map[i][y] --;
-					cnt++;
+					if (map[i][y] == -1) cnt++;
 				}
 			}
 		}
@@ -163,7 +149,7 @@ public class boj_15683 {
 			}
 		}
 		else if(dir == 4) {
-			for(int i=x+1 ; i<n ; i++) {
+			for(int i=x-1 ; i>=0 ; i--) {
 				if(map[i][y] == 6) break;
 				if(map[i][y] < 0) map[i][y]++;
 			}
