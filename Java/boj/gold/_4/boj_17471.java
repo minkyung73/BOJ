@@ -7,23 +7,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-/**
- * 2차원 배열에 인접 행렬 만들기
- * powerSet으로 팀 나누기
- * DFS로 인접되어 있나 확인
- * 인접해있으면 더한다.
- */
 public class boj_17471 {
 	// 게리맨더링
 	static int N;
-	static District[] districts;
-	static int[] pops, parents;
+	static int[] population;
+	static int[][] map;
+	static List<Integer> teamA, teamB;
 	static int result;
-	static boolean[] visited;
+	static int cnt;
+	static boolean flag;
 	
 	public static void main(String[] args) throws IOException {
 		init();
-		powerSet(1, 0, new boolean[N+1]);
+		powerSet(1, 1, new boolean[N+1]);
+		System.out.println(result == Integer.MAX_VALUE ? -1 : result);
 	}
 
 	public static void init() throws IOException {
@@ -31,35 +28,32 @@ public class boj_17471 {
 		
 		N = Integer.parseInt(br.readLine());
 		
-		pops = new int[N+1];
-		parents = new int[N+1];
-		districts = new District[N+1];
+		population = new int[N+1];
+		map = new int[N+1][N+1];
 		result = Integer.MAX_VALUE;
-
-		// 각 구역의 인구 수
+		
+		// 각 구역의 인구수
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		for(int i=1 ; i<=N ; i++) pops[i] = Integer.parseInt(st.nextToken());
+		for(int i=1 ; i<=N ; i++) 
+			population[i] = Integer.parseInt(st.nextToken());
 		
-		// 부모 노드
-		for(int i=1 ; i<=N ; i++) parents[i] = i;
-		
-		// 인접한 구역
+		// 인접한 구역 연결하기
 		for(int i=1 ; i<=N ; i++) {
 			st = new StringTokenizer(br.readLine());
-			
 			int num = Integer.parseInt(st.nextToken());
-			List<Integer> temp = new ArrayList<>();
-			for(int j=0 ;j<num ; j++) temp.add(Integer.parseInt(st.nextToken()));
-			
-			districts[i] = new District(pops[i], temp);
+
+			for(int j=0 ; j<num ; j++) {
+				int v = Integer.parseInt(st.nextToken());
+				map[i][v] = map[v][i] = 1;
+			}
 		}
 	}
 
 	public static void powerSet(int idx, int k, boolean[] sel) {
 		// basis part
 		if(idx == N+1) {
-			int res = getRes(sel);	// 각 인구의 차이 구하기
-			if(res != -1) result = Math.min(result, res);	
+			int res = divideTeam(sel);
+			result = Math.min(result, res);
 			return ;
 		}
 		
@@ -67,50 +61,65 @@ public class boj_17471 {
 		sel[idx] = true;
 		powerSet(idx+1, k+1, sel);
 		sel[idx] = false;
-		if(idx != 0) powerSet(idx+1, k, sel);
+		if(idx != 1) powerSet(idx+1, k, sel);
 	}
-	
-	public static int getRes(boolean[] sel) {
-		// 팀 나누기
-		List<Integer> teamA = new ArrayList<>();
-		List<Integer> teamB = new ArrayList<>();
-		for(int i=0 ; i<sel.length ; i++) {
-			if(sel[i]) teamA.add(i+1);
-			else teamB.add(i+1);
+
+	public static int divideTeam(boolean[] sel) {
+		teamA = new ArrayList<>();
+		teamB = new ArrayList<>();
+
+		// 1번 구역은 무조건 teamA
+		for (int i = 1; i <= N; i++) {
+			if(sel[i] == sel[1]) teamA.add(i);
+			else teamB.add(i);
 		}
-		
-		// 팀이 두 구역으로 나뉘지 않았다면 return -1
-		if(teamA.isEmpty() || teamB.isEmpty()) return -1;
-		
-		// 팀끼리 인접해있지 않다면 return -1
-		visited = new boolean[N+1];
-		DFS(teamA.get(0), teamA);
-		
-//		return Math.abs(popA - popB);
-		return 0;
+
+		// 인접한지 확인
+		if (!teamA.isEmpty() && !teamB.isEmpty()) {
+			int popsA = 0, popsB = 0;
+
+			// A
+			cnt = 0;
+			flag = false;
+			DFS(teamA.get(0), teamA, new boolean[N+1]);
+			if(flag) popsA = getPops(teamA);
+
+			// B
+			cnt = 0;
+			flag = false;
+			DFS(teamB.get(0), teamB, new boolean[N+1]);
+			if(flag) popsB = getPops(teamB);
+
+			if(popsA != 0 && popsB != 0)
+				return Math.abs(popsA - popsB);
+		}
+
+		return Integer.MAX_VALUE;
 	}
-	
-	public static void DFS(int node, List<Integer> team) {
-		System.out.println(node);
+
+	public static void DFS(int node, List<Integer> team, boolean[] visited) {
 		visited[node] = true;
-		
-		for(int i=0 ; i < team.size() ; i++	) {
-			if(!visited[team.get(i)] 
-					&& districts[node].neighbor.contains(i)) {
-				DFS(i, team);
+		cnt++;
+
+		if (cnt == team.size()) {
+			flag = true;
+			return ;
+		}
+
+		for(int i=1 ; i<=N ; i++) {
+			if (!visited[i] && map[node][i] == 1 && team.contains(i)) {
+				DFS(i, team, visited);
 			}
 		}
-		
-		return ;
 	}
-	
-	public static class District {
-		int population;
-		List<Integer> neighbor;
-		
-		public District(int population, List<Integer> neighbor) {
-			this.population = population;
-			this.neighbor = neighbor;
+
+	public static int getPops(List<Integer> team) {
+		int sum = 0;
+
+		for (Integer idx : team) {
+			sum += population[idx];
 		}
+
+		return sum;
 	}
 }
