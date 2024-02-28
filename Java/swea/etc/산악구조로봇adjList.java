@@ -4,7 +4,7 @@ import java.util.*;
 import java.awt.Point;
 import java.io.*;
 
-public class 산악구조로봇 {
+public class 산악구조로봇adjList {
 	// 산악구조로봇
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringBuilder sb = new StringBuilder();
@@ -99,7 +99,6 @@ public class 산악구조로봇 {
 					if(minDistance[temp.nx][temp.ny] > min + temp.w)
 						minDistance[temp.nx][temp.ny] = min + temp.w;
 				} // end of for temp loop
-				
 			} // end of for j loop
 		} // end of for i loop
 	}
