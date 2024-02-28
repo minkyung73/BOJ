@@ -41,6 +41,9 @@ public class boj_1753 {
             int weight = Integer.parseInt(st.nextToken());
             adjList[from] = new Node(to, weight, adjList[from]);
         }
+        
+//        for (Node node : adjList)
+//			System.out.println(node);
 
         Arrays.fill(minDistance, INF);
         minDistance[start] = 0;
@@ -86,5 +89,11 @@ public class boj_1753 {
             this.weight = weight;
             this.next = next;
         }
+
+		@Override
+		public String toString() {
+			return "Node [vertex=" + vertex + ", weight=" + weight + ", next=" + next + "]";
+		}
     }
+    
 }

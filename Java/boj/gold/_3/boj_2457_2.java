@@ -11,7 +11,7 @@ public class boj_2457_2 {
 
 	public static void main(String[] args) throws IOException {
 		init();
-		System.out.println(anniversary());
+		System.out.println(dd());
 	}
 
 	public static void init() throws IOException {
@@ -46,9 +46,10 @@ public class boj_2457_2 {
 					|| (cur.endMonth == prev.endMonth && cur.endDay > prev.endDay))
 				continue;
 
-			flowers.remove(i);
-		}
+			flowers.remove(i);                                                                                      
+		} 
 
+		// print
 		for (Date date : flowers) System.out.println(date);
 		System.out.println("==============================");
 	}
@@ -71,12 +72,41 @@ public class boj_2457_2 {
 		}
 
 		// 마지막
-		if (compareDate(curDate, new Date(11, 30, 11, 30))) cnt++;
+		if (compareDate(curDate, new Date(12, 01, 12, 01))) cnt++;
 		else return 0;
 
 		return cnt;
 	}
 
+	public static int dd() {
+		int cnt = 0;
+		int idx = 0;
+		
+		while(true) {
+			boolean flag = false;
+			
+			for(int i=idx ; i<flowers.size() ; i++) {
+				Date date = flowers.get(i);
+				
+				if(compareDate(prevDate, date)) {
+					flag = true;
+					curDate = date;
+					idx = i;
+				} else {
+					prevDate = curDate;
+					break;
+				}
+				
+			}
+			
+			if(flag) cnt++;
+			else break;
+			
+		}
+		
+		return cnt;
+	}
+	
 	public static boolean compareDate(Date d1, Date d2) {
 		// d2의 시작 날짜가 d1의 종료 날짜 이전에 있는지
 		if (d2.startMonth < d1.endMonth) return true;
@@ -105,9 +135,9 @@ public class boj_2457_2 {
 			else if (this.startDay != o.startDay)
 				return this.startDay - o.startDay;
 			else if (this.endMonth != o.endMonth)
-				return this.endMonth - o.endMonth;
+				return o.endMonth - this.endMonth;
 			else
-				return this.endDay - o.endDay;
+				return o.endDay - this.endDay;
 		}
 
 		@Override
