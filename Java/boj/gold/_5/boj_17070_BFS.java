@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * BFS => 시간초과 
  */
-public class boj_17070 {
+public class boj_17070_BFS {
 	// 파이프 옮기기 1
 	
 	static int N;
