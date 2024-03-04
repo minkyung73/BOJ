@@ -14,6 +14,7 @@ public class boj_17070_DP {
     public static void main(String[] args) throws IOException {
         init();
         System.out.println(DP());
+//        print();
     }
 
     public static void init() throws IOException {
@@ -44,7 +45,7 @@ public class boj_17070_DP {
         // 세로
         if(dp[2][3][1] == 1) {
             for (int i = 3; i <= N ; i++) {
-                if(map[i][1] == 1) break;
+                if(map[i][3] == 1) break;
                 dp[i][3][2] = 1;    // 세로
             }
         }
@@ -53,15 +54,18 @@ public class boj_17070_DP {
     public static int DP() {
         for (int i = 2; i <= N ; i++) {
             for (int j = 4; j <= N ; j++) {
-                dp[i][j][0] = dp[i][j-1][0] + dp[i][j-1][1];
-                dp[i][j][2] = dp[i-1][j][1] + dp[i-1][j][2];
+            	if(map[i][j] == 1) continue;
+            	
+            	dp[i][j][0] = dp[i][j-1][0] + dp[i][j-1][1];
+            	dp[i][j][2] = dp[i-1][j][1] + dp[i-1][j][2];            		
 
-                if(map[i][j-1] != 1 && map[i-1][j] != 1 && map[i-1][j-1] != 1)
+                if(map[i][j-1] != 1 && map[i-1][j] != 1)
                     dp[i][j][1] = dp[i-1][j-1][0] + dp[i-1][j-1][1] + dp[i-1][j-1][2];
             }
         }
 
-        return dp[N][N][0] + dp[N][N][1] + dp[N][N][2];
+        if(map[N][N] == 1) return 0;
+        else return dp[N][N][0] + dp[N][N][1] + dp[N][N][2];
     }
 
     public static void print() {
