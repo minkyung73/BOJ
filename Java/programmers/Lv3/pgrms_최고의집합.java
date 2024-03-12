@@ -1,7 +1,7 @@
 package programmers.Lv3;
 import java.util.*;
 
-public class 최고의집합 {
+public class pgrms_최고의집합 {
 	class Solution {
 	    public int[] solution(int n, int s) {
 	        int[] answer = new int[n];
