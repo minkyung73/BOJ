@@ -48,10 +48,28 @@ class UserSolution {
 	}
 
 	public int remove(int mId) {
+//		System.out.println(mId);
+//		for (Integer key : depts.keySet()) {
+//			System.out.println(key + " " + depts.get(key));
+//		}
+
 		// 삭제할 부서
 		Dept dept = depts.get(mId);
+		if(dept == null) return -1;
+		long num = dept.num;
+
+		// 부모에서 삭제 & 인원수 계속 감소 시켜야 함
+		int id = mId;
+		while (true) {
+			int parent = depts.get(id).parent;
+			if(parent == 0) break;
+			depts.get(parent).num -= num;
+			id = parent;
+		}
+
 		depts.remove(mId);
-		
+		depts.get(dept.parent).childList.remove(Integer.valueOf(mId));
+
 		// 자식 삭제하기
 		Queue<Integer> queue = new LinkedList<>();
 		for(int i=0 ; i<dept.childList.size() ; i++) 
@@ -65,19 +83,43 @@ class UserSolution {
 			for(int i=0 ; i<dept.childList.size() ; i++)
 				queue.offer(dept.childList.get(i));
 		}
-		
-		System.out.println(dept.num);
-		return (int) dept.num;
+
+//		System.out.println("=========================");
+//		for (Integer key : depts.keySet()) {
+//			System.out.println(key + " " + depts.get(key));
+//		}
+
+		return (int) num;
 	}
 
 	public int distribute(int K) {
-		
-		
-		
-		
-		
-		
-		
+		long sum = 0;
+		List<Long> list = new ArrayList<>();
+
+		System.out.println("K: " + K);
+
+		for (int i = 0; i < groupNum; i++) {
+			long num = depts.get(groupList.get(i)).num;
+			sum += num;
+			list.add(num);
+		}
+		Collections.sort(list);
+
+		for (int i = 0; i < groupNum; i++)
+			System.out.println("group " + i + " : " + list.get(i));
+		System.out.println("=> sum: " + sum);
+		System.out.println("=======================");
+
+		// 상품권 수가 인원 수 합 보다 많은 경우
+		if(K >= sum) return Math.toIntExact(list.get(list.size() - 1));
+
+		// 상품권 수 보다 인원 수 합이 더 많은 경우
+		int L = 0;
+		int sum2 = 0;
+		for (int i = 0; i < list.size(); i++) {
+			sum2 += list.get(i);
+		}
+
 		return 35;
 	}
 	
