@@ -140,5 +140,18 @@ class UserSolution {
 		public String toString() {
 			return "Dept [id=" + id + ", num=" + num + ", parent=" + parent + ", childList=" + childList + "]";
 		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
+			Dept dept = (Dept) o;
+			return id == dept.id && num == dept.num && parent == dept.parent && Objects.equals(childList, dept.childList);
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(id, num, parent, childList);
+		}
 	}
 }
