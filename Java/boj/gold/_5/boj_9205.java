@@ -7,6 +7,7 @@ import java.util.StringTokenizer;
 public class boj_9205 {
 	// 맥주 마시면서 걸어가기
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static StringBuilder sb = new StringBuilder();
 	
 	static int n;
 	static Point[] nodes; 
@@ -18,17 +19,19 @@ public class boj_9205 {
 		
 		for(int i=0 ; i<t ; i++) {
 			init();
-			print();
 			floyd_warshall();
-			print();
+			if(dist[0][n-1] > 0 && dist[0][n-1] < INF) sb.append("happy\n");
+			else sb.append("sad\n");
 		}
+		
+		System.out.println(sb);
 	}
 
 	public static void init() throws IOException {
 		n = Integer.parseInt(br.readLine())+2;
 		
 		nodes = new Point[n];
-		dist = new int[n][n];
+		dist = new int[n][n]; 
 		
 		for(int i=0 ; i<n ; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
@@ -42,19 +45,9 @@ public class boj_9205 {
 			for(int j=0 ;j<n ;j++) {
 				if(i==j) continue;
 				dist[i][j] = INF;
-			}
-		}
-		
-		//
-		for(int i=0 ; i<n ; i++ ) {
-			Point start = nodes[i];
-			for(int j=0 ;j<n ;j ++) {
-				if(i==j) continue;
-				Point end = nodes[j];
 				
-				int d = Math.abs(start.x - end.x) + Math.abs(start.y - end.y);
-				dist[i][j] = Math.min(dist[i][j], d);
-				dist[j][i] = Math.min(dist[j][i], d);
+				int d = Math.abs(nodes[i].x - nodes[j].x) + Math.abs(nodes[i].y - nodes[j].y);
+				if(d <= 1000) dist[i][j] = 1;
 			}
 		}
 	}
@@ -68,19 +61,5 @@ public class boj_9205 {
 				}
 			}
 		}
-	}
-	
-	public static void print() {
-		StringBuilder sb = new StringBuilder();
-		
-		for(int i=0 ; i<n ;i ++) {
-			for(int j=0 ;j<n ;j++) {
-				if(dist[i][j] == INF) sb.append("INF ");
-				else sb.append(dist[i][j]).append(" ");
-			}
-			sb.append("\n");
-		}
-		
-		System.out.println(sb);
 	}
 }
