@@ -33,6 +33,7 @@ public class boj_11403 {
 			for(int i=0 ; i<n ; i++) {
 				for(int j=0 ;j<n ; j++) {
 					// (i,k)가 연결되어 있고, (k, j)가 연결되어 있다면 (i, j)는 연결할 수 있다.
+					// i에서 j까지 가는데에 k를 거치는 것
 					if(dist[i][k] == 1 && dist[k][j] == 1)
 						dist[i][j] = 1;
 				}
