@@ -13,7 +13,7 @@ public class boj_14938 {
 	public static void main(String[] args) throws IOException {
 		init();
 		floyd_warshall();
-		print();
+//		print();
 		int res = getItems();
 		System.out.println(res);
 	}
