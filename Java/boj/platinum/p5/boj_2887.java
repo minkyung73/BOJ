@@ -9,7 +9,9 @@ public class boj_2887 {
 	static int n;
 	static Point[] planet;
 	static int[] parents;
-	static List<Edge> edgeList;
+	static List<Edge> edgeList;	// List, PriorityQueue, TreeSet
+//	static TreeSet<Edge> edgeList;
+//	static PriorityQueue<Edge> edgeList;
 	
 	public static void main(String[] args) throws IOException {
 		init();
@@ -24,6 +26,8 @@ public class boj_2887 {
 		planet = new Point[n];
 		parents = new int[n];
 		edgeList = new ArrayList<>();
+//		edgeList = new TreeSet<>((o1, o2) -> o1.weight - o2.weight);
+//		edgeList = new PriorityQueue<>((o1, o2) -> o1.weight - o2.weight);
 		
 		for(int i=0 ; i<n ; i++) parents[i] = i;
 		
@@ -31,27 +35,38 @@ public class boj_2887 {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			int x = Integer.parseInt(st.nextToken());
 			int y = Integer.parseInt(st.nextToken());
-			int z = Integer.parseInt(st.nextToken());
-		
+			int z = Integer.parseInt(st.nextToken());		
 			planet[i] = new Point(x, y, z, i);
 		}
 		
-		for(int i=0 ;i <n ; i++ ) {
-			for(int j=i+1 ; j<n ; j++) {
-				int weight = getWeight(planet[i], planet[j]);
-				edgeList.add(new Edge(planet[i], planet[j], weight));
-			}
+		Arrays.sort(planet, (o1, o2) -> o1.x - o2.x);
+		for(int i=0 ; i<n-1 ; i++) {
+			int w = Math.abs(planet[i].x - planet[i+1].x);
+			edgeList.add(new Edge(planet[i].idx, planet[i+1].idx, w));
 		}
+		
+		Arrays.sort(planet, (o1, o2) -> o1.y - o2.y);
+		for(int i=0 ; i<n-1 ; i++) {
+			int w = Math.abs(planet[i].y - planet[i+1].y);
+			edgeList.add(new Edge(planet[i].idx, planet[i+1].idx, w));
+		}
+		
+		Arrays.sort(planet, (o1, o2) -> o1.z - o2.z);
+		for(int i=0 ; i<n-1 ; i++) {
+			int w = Math.abs(planet[i].z - planet[i+1].z);
+			edgeList.add(new Edge(planet[i].idx, planet[i+1].idx, w));
+		}
+		
 		Collections.sort(edgeList);
 		
+		print();
+	}
+	
+	public static void print() {
 		for (Edge edge : edgeList) {
 			System.out.println(edge);
 		}
-	}
-	
-	public static int getWeight(Point from, Point to) {
-		int min = Math.min(Math.abs(from.x - to.x), Math.abs(from.y - to.y));
-		return Math.min(min, Math.abs(from.z - to.z));
+		System.out.println();
 	}
 	
 	public static int kruskal() {
@@ -67,9 +82,9 @@ public class boj_2887 {
 		return weight;
 	}
 	
-	public static boolean union(Point from, Point to) {
-		int fromRoot = find(from.idx);
-		int toRoot = find(to.idx);
+	public static boolean union(int from, int to) {
+		int fromRoot = find(from);
+		int toRoot = find(to);
 		
 		if(fromRoot == toRoot) return false;
 		parents[fromRoot] = toRoot;
@@ -82,10 +97,10 @@ public class boj_2887 {
 	}
 	
 	public static class Edge implements Comparable<Edge> {
-		Point from, to;
+		int from, to;
 		int weight;
 		
-		public Edge(Point from, Point to, int weight) {
+		public Edge(int from, int to, int weight) {
 			super();
 			this.from = from;
 			this.to = to;
@@ -101,8 +116,23 @@ public class boj_2887 {
 		public String toString() {
 			return "Edge [from=" + from + ", to=" + to + ", weight=" + weight + "]";
 		}
-		
-		
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(from, to, weight);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Edge other = (Edge) obj;
+			return from == other.from && to == other.to && weight == other.weight;
+		}
 	}
 	
 	public static class Point {
