@@ -54,7 +54,7 @@ public class swea_2112 {
                     
                     if (same >= K) continue L;
                 }
-                return;
+//                return;
             }
             minCnt = Math.min(minCnt, cnt);
             return;
