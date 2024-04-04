@@ -94,7 +94,7 @@ public class swea_4014 {
 			}
 		}
 		
-		System.out.println("row: " + row);
+//		System.out.println("row: " + row);
 		cnt++;
 	}
 	
@@ -148,7 +148,7 @@ public class swea_4014 {
 			}			
 		}
 		
-		System.out.println("col: " + col);
+//		System.out.println("col: " + col);
 		cnt++;
 	}
 	
