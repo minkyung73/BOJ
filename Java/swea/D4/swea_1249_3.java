@@ -3,9 +3,9 @@ package swea.D4;
 import java.io.*;
 import java.util.*;
 
-public class swea_1249_2 {
+public class swea_1249_3 {
 	// [S/W 문제해결 응용] 4일차 - 보급로
-	// BFS
+	// BFS - Point 사용하지 않고 배열 사용하기
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringBuilder sb = new StringBuilder();
 	
@@ -36,24 +36,24 @@ public class swea_1249_2 {
 	}
 	
 	public static int BFS() {
-		PriorityQueue<Point> queue = new PriorityQueue<>((o1, o2) -> Integer.compare(o1.sum, o2.sum));
+		PriorityQueue<int[]> queue = new PriorityQueue<>((o1, o2) -> Integer.compare(o1[2], o2[2]));
 		boolean[][] visited = new boolean[N][N];
 		
-		queue.offer(new Point(0, 0, 0));
+		queue.offer(new int[] {0, 0, 0});
 		visited[0][0] = true;
 		
 		while(!queue.isEmpty()) {
-			Point now = queue.poll();
+			int[] now = queue.poll();
 			
-			if(now.x == N-1 && now.y == N-1)
-				return now.sum;
+			if(now[0] == N-1 && now[1] == N-1)
+				return now[2];
 			
 			for(int i=0 ;i<4 ; i++) {
-				int nx = now.x + dx[i];
-				int ny = now.y + dy[i];
+				int nx = now[0] + dx[i];
+				int ny = now[1] + dy[i];
 				
 				if(checkRange(nx, ny) && !visited[nx][ny]) {
-					queue.offer(new Point(nx, ny, now.sum + map[nx][ny]));
+					queue.offer(new int[] {nx, ny, now[2] + map[nx][ny]});
 					visited[nx][ny] = true;
 				}
 			}
@@ -64,15 +64,5 @@ public class swea_1249_2 {
 	
 	public static boolean checkRange(int x, int y) {
 		return x >= 0 && x < N && y >= 0 && y < N;
-	}
-	
-	public static class Point {
-		int x, y, sum;
-
-		public Point(int x, int y, int sum) {
-			this.x = x;
-			this.y = y;
-			this.sum = sum;
-		}
 	}
 }
