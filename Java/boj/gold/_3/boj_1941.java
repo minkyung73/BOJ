@@ -1,58 +1,77 @@
 package boj.gold._3;
 
+import java.awt.Point;
 import java.io.*;
+import java.util.*;
 
 public class boj_1941 {
+	// 소문난 칠공주
 	static char[][] map = new char[5][5];
-	static boolean[][] visited;
+	static int[] sel = new int[7];
+	static int[] dx = {-1, 1, 0, 0};
+	static int[] dy = {0, 0, -1, 1};
 	static int cnt = 0;
-	
-	static final int[] dx = {-1, 1, 0, 0};
-	static final int[] dy = {0, 0, -1, 1};
 	
 	public static void main(String[] args) throws IOException {
 		init();
-		for(int i=0 ;i <5 ; i++) {
-			for(int j=0 ;j <5 ; j++) {
-				visited = new boolean[5][5];
-				if(map[i][j] == 'Y') princess(0, i, j, 1, 0);
-				else princess(0, i, j, 0, 1);
-			}
-		}
+		combi(0, 0, 0);
 		System.out.println(cnt);
 	}
 
 	public static void init() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		for(int i=0 ;i<5 ; i++) {
-			String str = br.readLine();
-			for(int j=0 ; j<5 ; j++) {
-				map[i][j] = str.charAt(j);
-			}
+		for(int i=0 ; i<5 ; i++) {
+			map[i] = br.readLine().toCharArray();
 		}
 	}
 	
-	public static void princess(int depth, int x, int y, int y_num, int s_num) {
+	public static void combi(int idx, int k, int ynum) {
 		// basis part
-		if(depth == 7) {
-			cnt++;
+		if(ynum >= 4) return ;
+
+		if(k == 7) {
+//			System.out.println(Arrays.toString(sel));
+			BFS();
 			return ;
 		}
 		
-		if(y_num >= 4) return ;
+		if(idx == 25) return ;
 		
 		// inductive part
-		for(int i=0 ; i<4 ; i++) {
-			int nx = x + dx[i];
-			int ny = y + dy[i];
+		sel[k] = idx;
+		if(map[idx/5][idx%5] == 'S') combi(idx+1, k+1, ynum);
+		else combi(idx+1, k+1, ynum+1);
+		combi(idx+1, k, ynum);
+	}
+	
+	public static void BFS() {
+		Queue<int[]> queue = new LinkedList<>();
+		boolean[] visited = new boolean[7];
+		int connected = 1;
+		
+		queue.offer(new int[] {sel[0]/5, sel[0]%5});
+		visited[0] = true;
+		
+		while(!queue.isEmpty()) {
+			int[] now = queue.poll();
 			
-			if(checkRange(nx, ny) && !visited[nx][ny]) {
-				visited[nx][ny] = true;
-				if(map[nx][ny] == 'Y') princess(depth+1, nx, ny, y_num+1, s_num);
-				else princess(depth+1, nx, ny, y_num, s_num+1);
+			for(int i=0 ; i<4 ; i++) {
+				int nx = now[0] + dx[i];
+				int ny = now[1] + dy[i];
+				
+				if(!checkRange(nx, ny)) continue;
+				
+				for(int j=0 ;j<7 ; j++) {
+					if(!visited[j] && sel[j] == nx*5+ny) {
+						queue.offer(new int[] {nx, ny});
+						visited[j] = true;
+						connected++;
+					}
+				}
 			}
 		}
+		
+		if(connected == 7) cnt++;
 	}
 	
 	public static boolean checkRange(int x, int y) {
