@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-public class boj_101816 {
+public class boj_10816_2 {
     // 숫자 카드 2
 
     public static void main(String[] args) throws IOException {
