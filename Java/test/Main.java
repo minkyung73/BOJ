@@ -9,6 +9,8 @@ public class Main {
     static String[] phone_book = {"12","123","1235","567","88"};
     static Stack<Integer> stack = new Stack<>();
     static Queue<Integer> queue = new LinkedList<>();
+    static List<Integer> list = new ArrayList<>();
+    static int[] arr = {3, 30, 34, 5, 9};
 
     public static void main(String[] args) {
         Arrays.sort(phone_book, new Comparator<String>() {
@@ -19,9 +21,9 @@ public class Main {
             }
         });
 
-        System.out.println(Arrays.toString(phone_book));
 
-//        phone_book[0].compareTo(phone_book[1])
+
+        String str = "11 9552 4421";
     }
 
     public static class Point {

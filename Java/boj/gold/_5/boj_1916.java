@@ -65,19 +65,19 @@ public class boj_1916 {
 
         return dist[end];
     }
+    public static class Node implements Comparable<Node> {
+        int end;
+        int weight;
+
+        public Node(int end, int weight) {
+            this.end = end;
+            this.weight = weight;
+        }
+
+        @Override
+        public int compareTo(Node o) {
+            return weight - o.weight;
+        }
+    }
 }
 
-class Node implements Comparable<Node> {
-    int end;
-    int weight;
-
-    public Node(int end, int weight) {
-        this.end = end;
-        this.weight = weight;
-    }
-
-    @Override
-    public int compareTo(Node o) {
-        return weight - o.weight;
-    }
-}
