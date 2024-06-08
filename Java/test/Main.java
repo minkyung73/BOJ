@@ -19,11 +19,9 @@ public class Main {
             }
         });
 
-
         System.out.println(Arrays.toString(phone_book));
 
-
-
+//        phone_book[0].compareTo(phone_book[1])
     }
 
     public static class Point {
