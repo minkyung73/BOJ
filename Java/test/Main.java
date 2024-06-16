@@ -21,6 +21,9 @@ public class Main {
             }
         });
 
+        List<Point> list = new ArrayList<>();
+
+        
 
 
         String str = "11 9552 4421";
